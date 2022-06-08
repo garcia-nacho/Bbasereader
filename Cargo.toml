@@ -1,0 +1,14 @@
+[package]
+name = "bbasereader"
+version = "0.1.0"
+authors = ["garcia-nacho <garcia.nacho@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "2.33.3"
+rust-htslib = "0.36.0"
+bio = "*"
+permutation = "0.2.5"
+regex = "1"
