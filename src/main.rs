@@ -62,10 +62,11 @@ match pos_tr {
 
         let pileup = p2.unwrap();
         let mut total_base = Vec::new();
-        let mut ins_vector = Vec::new();
+   
         in_count =0;
         in_len=0;
         for alignment in pileup.alignments() {
+
             if pileup.pos() > pos {
                 break;
             }
@@ -81,40 +82,27 @@ match pos_tr {
                     if b_id==71 {b_out="G";};
                     println!("{}\t{}\t{}", s, pileup.pos()+1,b_out);
                 }
-    
             }
             if alignment.is_del() && !alignment.is_refskip()  && pileup.pos()+1 ==pos{
                 let s = format!("{:?}", &alignment.record().qname());
                 println!("{}\t{}\t{}", s, pileup.pos()+1,"D");    
             }
+            
+           
             match alignment.indel() {
                
                 bam::pileup::Indel::Ins(len) => {
 
-                    //ins_base.push(alignment.record().seq()[alignment.qpos().unwrap()]);
-                    let start_del = alignment.qpos().unwrap() as u32;
-                    let end_del = &start_del + len as u32;
-
-                    let sq = format!("{:?}", &alignment.record().qname());
-                    let mut ins_base =  &alignment.record().seq().as_bytes()[start_del as usize..end_del as usize];
-                    let mut s2 = match str::from_utf8(ins_base) {
-                        Ok(v) => v,
-                        Err(e) => (panic!("Invalid UTF-8 sequence: {}", e)),
-                    };
-                    
-                    ins_vector.push(s2.to_string());
                     if pileup.pos()+1 ==pos {
-                        println!("{}\t{}\t{:?}", sq, pileup.pos()+1,&ins_vector); 
+                        let sq = format!("{:?}", &alignment.record().qname());
+                        println!("{}\t{}\t{:?}", sq, pileup.pos()+1,"I"); 
                     };
      
-
-
-                    in_count += 1; 
-                    in_len = len;
                 },
                 bam::pileup::Indel::Del(len2) => (),
                 bam::pileup::Indel::None => (),
             }
+            
             
 
         }
