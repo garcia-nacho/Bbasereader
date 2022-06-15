@@ -70,16 +70,18 @@ match pos_tr {
                 break;
             }
             if !alignment.is_del() && !alignment.is_refskip() && pileup.pos()+1 ==pos {
-                //let mut ins_matrix = [[0u8; 2]; 2]; //matrix insertions 2x2
-                total_base.push(alignment.record().seq()[alignment.qpos().unwrap()]);
-                let s = format!("{:?}", &alignment.record().qname());
-                let b_id=alignment.record().seq()[alignment.qpos().unwrap()]; 
-                let mut b_out="N";
-                if b_id==65 {b_out="A";};
-                if b_id==84 {b_out="T";};
-                if b_id==67 {b_out="C";};
-                if b_id==71 {b_out="G";};
-                println!("{}\t{}\t{}", s, pileup.pos()+1,b_out);    
+                if alignment.record().seq().len() > 0{
+                    total_base.push(alignment.record().seq()[alignment.qpos().unwrap()]);
+                    let s = format!("{:?}", &alignment.record().qname());
+                    let b_id=alignment.record().seq()[alignment.qpos().unwrap()]; 
+                    let mut b_out="N";
+                    if b_id==65 {b_out="A";};
+                    if b_id==84 {b_out="T";};
+                    if b_id==67 {b_out="C";};
+                    if b_id==71 {b_out="G";};
+                    println!("{}\t{}\t{}", s, pileup.pos()+1,b_out);
+                }
+    
             }
             if alignment.is_del() && !alignment.is_refskip()  && pileup.pos()+1 ==pos{
                 let s = format!("{:?}", &alignment.record().qname());
